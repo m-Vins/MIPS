@@ -2,8 +2,8 @@
 DIM= 5
 #mat:        .word 1,4,5,6,7,4,2,8,6,4,5,8,3,2,9,6,6,2,4,4,7,4,9,4,5
 mat:         .word 1,0,0,0,0,0,2,0,0,0,0,0,3,0,0,0,0,0,4,0,0,0,0,0,5
-message_nodiag  .asciiz "la matrice non è diagonale"
-message_diag    .asciiz "la matrice è diagonale"
+message_nodiag:  .asciiz "la matrice non è diagonale"
+message_diag:    .asciiz "la matrice è diagonale"
 
             .text
             .globl main
