@@ -4,7 +4,8 @@ DIM= 5
 mat:         .word 1 , 0  , 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 ,3 ,0 ,0 , 0 ,0 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,5
 message_nodiag:  .asciiz "la matrice non è diagonale"
 message_diag:    .asciiz "la matrice è diagonale"
-
+message_simm:    .asciiz "la matrice è simmetrica"
+message_nosimm:  .asciiz "la matrice non è simmetrica"
             .text
             .globl main
             .ent main
@@ -38,6 +39,36 @@ nodiag:     la $a0,message_nodiag
 diag:       la $a0,message_diag
             li $v0,4
             syscall
+
+            #se diagonale controllo che sia simmetrica
+
+            la $t0,mat
+            li $t1,0 #contatore
+            li $t8,DIM
+            li $t6,4 #byte per word
+
+loop2:      div $t1,$t8
+            mfhi $t2
+            mflo $t3
+            mul $t2,$t2,$t6
+            add $t2,$t2,$t3
+            mul $t2,$t2,$t6
+            mul $t7,$t1,$t6
+            lw $t6,($t2)
+            lw $t7,($t7)
+            bne $t6,$t7,nosimm
+            addi $t1,$t1,1
+            bne $t1,$t4,loop2
+
+            la $a0,message_simm
+            li $v0,4
+            syscall
+            j exit
+
+nosimm:     la $a0,message_nosimm
+            li $v0,4
+            syscall
+
 
 exit:       li $v0,10
             syscall
