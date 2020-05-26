@@ -1,11 +1,11 @@
 .data
 DIM= 5
-#mat:        .word 1,4,5,6,7,4,2,8,6,4,5,8,3,2,9,6,6,2,4,4,7,4,9,4,5
-mat:         .word 1 , 0  , 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 ,3 ,0 ,0 , 0 ,0 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,5
-message_nodiag:  .asciiz "la matrice non è diagonale"
-message_diag:    .asciiz "la matrice è diagonale"
-message_simm:    .asciiz "la matrice è simmetrica"
-message_nosimm:  .asciiz "la matrice non è simmetrica"
+mat:        .word 1 ,4 ,5 ,6 ,7 ,4 ,2 ,8 ,6 ,4 ,5 ,8 ,3 ,2 ,9 ,6 ,6 ,2 ,4 ,4 ,7 ,4 ,9 ,4 ,5
+#mat:         .word 1 , 0  , 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 ,3 ,0 ,0 , 0 ,0 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,5
+message_nodiag:  .asciiz "la matrice non è diagonale\n"
+message_diag:    .asciiz "la matrice è diagonale\n"
+message_simm:    .asciiz "la matrice è simmetrica\n"
+message_nosimm:  .asciiz "la matrice non è simmetrica\n"
             .text
             .globl main
             .ent main
@@ -34,7 +34,7 @@ diag_jump:  addi $t0,$t0,1
 nodiag:     la $a0,message_nodiag
             li $v0,4
             syscall
-            j exit
+            j checksimm
 
 diag:       la $a0,message_diag
             li $v0,4
@@ -42,18 +42,21 @@ diag:       la $a0,message_diag
 
             #se diagonale controllo che sia simmetrica
 
-            la $t0,mat
+checksimm:  la $t0,mat
             li $t1,0 #contatore
             li $t8,DIM
-            li $t6,4 #byte per word
+            li $s0,4 #byte per word
+            addi $t4,$t4,-1
 
 loop2:      div $t1,$t8
             mfhi $t2
             mflo $t3
-            mul $t2,$t2,$t6
+            mul $t2,$t2,$t8
             add $t2,$t2,$t3
-            mul $t2,$t2,$t6
-            mul $t7,$t1,$t6
+            mul $t2,$t2,$s0
+            mul $t7,$t1,$s0
+            add $t2,$t0,$t2
+            add $t7,$t7,$t0
             lw $t6,($t2)
             lw $t7,($t7)
             bne $t6,$t7,nosimm
