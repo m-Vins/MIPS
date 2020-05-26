@@ -15,7 +15,7 @@ main:       jal tri
 
             .ent tri
 
-tri:        li $t0,0 #contatore
+tri:        li $t0,1 #contatore
             li $t2,DIM
 
 loope_t:    li $t1,0
@@ -40,9 +40,9 @@ loopi_t:    li $v0,11
 
             .ent quad
 
-quad:       li $t0,0
+quad:       li $t0,1
             li $t2,DIM
-            mul $t2,$t2,$t2
+            mul $t3,$t2,$t2
 
 loop:       div $t0,$t2
             mfhi $t1
@@ -51,11 +51,12 @@ loop:       div $t0,$t2
             li $a0,'\n'
             syscall
             addi $t0,$t0,1
-            beq $t2,$t0,exit_p
+            beq $t3,$t0,exit_p
 myjump:     li $v0,11
             li $a0,'*'
             syscall
             addi $t0,$t0,1
+            beq $t3,$t0,exit_p
             j loop
 
 exit_p:     jr $ra
