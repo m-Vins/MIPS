@@ -1,5 +1,5 @@
                 .data
-vettore:        .word 1 , 5 , 7 , 2 , 51 , 3 , 60
+vettore:        .word 70 , 5 , 7 , 2 , 51 , 3 , 60
 dim:            .word 7
 
                 .text
@@ -8,6 +8,8 @@ dim:            .word 7
 
 main:           la $a0,vettore
                 lw $a1,dim
+
+                jal massimo
 
                 add $a0,$v0,$0
                 li $v0,1
