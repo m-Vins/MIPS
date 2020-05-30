@@ -10,9 +10,9 @@ main:       la $a0,request
             li $v0,5
             syscall
             add $a0,$v0,$0
-            add $t8,$v0,$0
+            add $t7,$v0,$0
             jal tri
-            add $a0,$a0,$0
+            add $a0,$t7,$0
             jal quad
 
             li $v0,10

@@ -1,6 +1,6 @@
             .data
-n:          .word 6
-k:          .word 3
+n:          .word 12
+k:          .word 2
 
             .text
             .globl main
